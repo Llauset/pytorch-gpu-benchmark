@@ -1,0 +1,14 @@
+benchmark start : 2024/02/17 11:39:30
+system_configs
+
+uname_result(system='Linux', node='Desktop', release='5.15.146.1-microsoft-standard-WSL2', version='#1 SMP Thu Jan 11 04:09:03 UTC 2024', machine='x86_64')
+                     scpufreq(current=2591.997, min=0.0, max=0.0)
+                    cpu_count: 12
+                    memory_available: 15146844160
+gpu_configs
+
+Number of GPUs on current device : 1
+CUDA Version : 12.1
+Cudnn Version : 8902
+Device Name : NVIDIA GeForce RTX 4060 Ti
+benchmark end : 2024/02/17 12:53:48
