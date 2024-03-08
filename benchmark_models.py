@@ -19,14 +19,8 @@ torch.backends.cudnn.benchmark = True
 
 
 MODEL_LIST = {
-    models.mnasnet: models.mnasnet.__all__[1:],
     models.resnet: models.resnet.__all__[1:],
     models.densenet: models.densenet.__all__[1:],
-    models.squeezenet: models.squeezenet.__all__[1:],
-    models.vgg: models.vgg.__all__[1:],
-    models.mobilenet: models.mobilenet.mv2_all[1:],
-    models.mobilenet: models.mobilenet.mv3_all[1:],
-    models.shufflenetv2: models.shufflenetv2.__all__[1:],
 }
 
 precisions = ["float", "half", "double"]
@@ -87,6 +81,7 @@ def train(precision="single"):
     target = torch.LongTensor(args.BATCH_SIZE).random_(args.NUM_CLASSES).cuda()
     criterion = nn.CrossEntropyLoss()
     benchmark = {}
+    print(MODEL_LIST)
     for model_type in MODEL_LIST.keys():
         for model_name in MODEL_LIST[model_type]:
             if model_name[-8:] == '_Weights': continue
