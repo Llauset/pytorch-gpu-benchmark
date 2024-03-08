@@ -43,3 +43,7 @@ Olympe training:
 Olympe inference:
 
 ![Olympe inference](https://github.com/calmip/pytorch-gpu-benchmark/blob/main/fig/olympe_inference.png)
+
+# What is asked
+
+Energy for ...
