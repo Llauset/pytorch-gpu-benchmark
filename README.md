@@ -38,8 +38,8 @@ datatype and the number of GPUs.
 
 Olympe training:
 
-![Olympe training](image_url)
+![Olympe training](https://github.com/calmip/pytorch-gpu-benchmark/blob/main/fig/olympe_train.png)
 
 Olympe inference:
 
-![Olympe inference](image_url)
+![Olympe inference](https://github.com/calmip/pytorch-gpu-benchmark/blob/main/fig/olympe_inference.png)
