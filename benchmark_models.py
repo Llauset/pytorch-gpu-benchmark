@@ -19,8 +19,8 @@ torch.backends.cudnn.benchmark = True
 
 
 MODEL_LIST = {
-    models.resnet: models.resnet.__all__[1:],
-    models.densenet: models.densenet.__all__[1:],
+    models.resnet: ['resnet50', 'resnet101', 'resnet152', 'wide_resnet50_2', 'wide_resnet101_2'],
+    models.densenet: ['densenet121', 'densenet201'],
 }
 
 precisions = ["float", "half", "double"]
@@ -48,7 +48,7 @@ parser.add_argument(
     "--folder",
     "-f",
     type=str,
-    default="result",
+    default="results",
     required=False,
     help="folder to save results",
 )
@@ -81,7 +81,7 @@ def train(precision="single"):
     target = torch.LongTensor(args.BATCH_SIZE).random_(args.NUM_CLASSES).cuda()
     criterion = nn.CrossEntropyLoss()
     benchmark = {}
-    print(MODEL_LIST)
+
     for model_type in MODEL_LIST.keys():
         for model_name in MODEL_LIST[model_type]:
             if model_name[-8:] == '_Weights': continue
@@ -91,7 +91,7 @@ def train(precision="single"):
             model = getattr(model, precision)()
             model = model.to("cuda")
             durations = []
-            print(f"Benchmarking Training {precision} precision type {model_name} ")
+            print(f"Benchmarking: Training | Precision type: {precision} | Model name: {model_name} | nb GPUs: {args.NUM_GPU}")
             for step, img in enumerate(rand_loader):
                 img = getattr(img, precision)()
                 torch.cuda.synchronize()
@@ -105,7 +105,7 @@ def train(precision="single"):
                 if step >= args.WARM_UP:
                     durations.append((end - start) * 1000)
             print(
-                f"{model_name} model average train time : {sum(durations)/len(durations)}ms"
+                f"{model_name} model average train time : {round(sum(durations)/len(durations), 2)} ms"
             )
             del model
             benchmark[model_name] = durations
@@ -126,7 +126,7 @@ def inference(precision="float"):
                 model.eval()
                 durations = []
                 print(
-                    f"Benchmarking Inference {precision} precision type {model_name} "
+                    f"Benchmarking: Inference | Precision type: {precision} | Model name: {model_name} | nb GPUs: {args.NUM_GPU}"
                 )
                 for step, img in enumerate(rand_loader):
                     img = getattr(img, precision)()
@@ -138,7 +138,7 @@ def inference(precision="float"):
                     if step >= args.WARM_UP:
                         durations.append((end - start) * 1000)
                 print(
-                    f"{model_name} model average inference time : {sum(durations)/len(durations)}ms"
+                    f"{model_name} model average inference time : {round(sum(durations)/len(durations), 2)} ms"
                 )
                 del model
                 benchmark[model_name] = durations
