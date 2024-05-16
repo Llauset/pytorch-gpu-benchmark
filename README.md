@@ -1,4 +1,4 @@
-# Benchmarck IA CALMIP
+# Benchmarck IA 
 This benchmarck allows to obtain the learning and inference speed for varius CNN models in __pytorch__  
 
 ## Benchmarck description
